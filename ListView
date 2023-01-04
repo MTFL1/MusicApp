@@ -1,0 +1,108 @@
+import SwiftUI
+import AVFoundation
+
+
+struct ListView: View {
+
+    var body: some View {
+        
+       
+       
+            
+        NavigationStack {
+                    Image("")
+                        .resizable()
+                        .cornerRadius(10)
+                        .frame(width: 370, height: 180)
+                    // Liste
+                    SearchTab(text:"")
+            VStack {
+                ScrollView{
+                        ForEach(sounds) { sound in
+                            NavigationLink(destination: {
+                                PlayerView(sounds: sound)
+                            },label: {
+                                HStack {
+                                    Text(sound.name)
+                                    Spacer()
+              
+                                }
+                                })
+                            }
+                     
+                            .padding(.all)
+                            .background(Color.gray)
+                            .cornerRadius(10)
+                            .padding(10)
+                            .foregroundColor(.white)
+                            Divider()
+                    }
+                }
+            }
+        }
+    }
+
+
+struct ListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ListView()
+    }
+}
+
+// Barre de recherche
+struct SearchTab: View {
+    
+    @State var text: String
+    @State var isEditing = false
+    
+    var body: some View {
+        HStack {
+            TextField("Rechercher ...", text: $text)
+                .padding(7)
+                .padding(.horizontal, 25)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+                .padding(.horizontal, 10)
+                .onTapGesture {
+                    self.isEditing = true
+                }
+ 
+            if isEditing {
+                Button(action: {
+                    self.isEditing = false
+                    self.text = ""
+ 
+                }) {
+                    Text("Cancel")
+                }
+                .padding(.trailing, 10)
+                .transition(.move(edge: .trailing))
+            }
+        }
+    }
+}
+
+struct SearchTab_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchTab(text:"")
+    }
+}
+// Struct Liste
+struct Sound: Identifiable{
+    var id = UUID()
+    var name: String
+
+}
+  var sounds = [
+    Sound(name: "song1"),
+    Sound(name: "song2"),
+    Sound(name: "song3"),
+    Sound(name: "song4"),
+    Sound(name: "song5"),
+    Sound(name: "song6"),
+    Sound(name: "song7"),
+    Sound(name: "song8"),
+    Sound(name: "song9"),
+    Sound(name: "song10")
+  
+  ]
