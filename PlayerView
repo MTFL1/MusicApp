@@ -1,0 +1,165 @@
+import SwiftUI
+import AVFoundation
+import AVKit
+
+struct PlayerView: View {
+    @State var audioPlayer: AVAudioPlayer!
+    @State private var timing: CGFloat = 0.0
+    var sounds : Sound
+    
+    var body: some View {
+        ZStack {
+            
+            /*      Image(affichagePlayer.cover)
+             
+             .resizable()
+             .blur(radius: 50)
+             .opacity(0.7)
+             .background(.thinMaterial)
+             .ignoresSafeArea()
+             .brightness(-0.2)
+             */
+            
+            VStack {
+                
+                // HEADER avec boutons et fleches et auditeurs en titre
+                HStack {
+                    
+                }.padding()
+                
+                Spacer()
+                
+                // Pochette album
+                
+                /*        Image(affichagePlayer.cover)
+                 .resizable()
+                 .scaledToFit()
+                 .frame(maxWidth: 400, maxHeight: 400,
+                 alignment: .center)
+                 .padding()
+                 */
+                
+                
+                HStack {
+                    VStack (alignment: .leading) {
+                        Text(sounds.name)
+                            .font(.title2)
+                            .bold()
+                            .foregroundStyle(.primary)
+                            .foregroundColor(.black)
+                        /*           Text(affichagePlayer.artist)
+                         .foregroundStyle(.secondary)
+                         .foregroundColor(.white)
+                         */
+                    }
+                    
+                    Spacer()
+                    
+                    Button {
+                        print("More")
+                    } label: {
+                        Image(systemName: "heart.fill")
+                            .font(.title)
+                            .foregroundStyle(.green)
+                        
+                    }
+                    
+                }.padding()
+                
+                
+                Slider(value: $timing, in: 0...180) {
+                    Text("Slider")
+                } minimumValueLabel: {
+                    Text("0:00")
+                }  maximumValueLabel: {
+                    Text("3:00")
+                }.foregroundColor(.black)
+                    .padding()
+                
+                
+                // Button play etc
+                // Play the audio file
+                
+                HStack {
+                    Button {
+                        print("shuffle")
+                    } label: {
+                        Image(systemName: "shuffle")
+                            .font(.title)
+                    }.foregroundColor(.black)
+                    
+                    Spacer()
+                    
+                    
+                    Button {
+                        print("More")
+                    } label: {
+                        Image(systemName: "backward.end.fill")
+                            .font(.system(size: 40))
+                    }.foregroundStyle(.primary)
+                        .foregroundColor(.black)
+                    
+                    Spacer()
+                    Button (action: {
+                        self.audioPlayer.play()
+                    }) {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 40))
+                    }.foregroundStyle(.primary)
+                        .foregroundColor(.black)
+                    
+                    Button (action: {
+                        self.audioPlayer.pause()
+                    }) {
+                        Image(systemName: "pause.fill")
+                            .font(.system(size: 40))
+                    }.foregroundStyle(.primary)
+                        .foregroundColor(.black)
+                    
+                    
+                    Spacer()
+                    
+                    
+                    Button {
+                        print("More")
+                    } label: {
+                        Image(systemName: "forward.end.fill")
+                            .font(.system(size: 40))
+                    }.foregroundStyle(.primary)
+                        .foregroundColor(.black)
+                    
+                    Spacer()
+                    
+                    
+                    Button {
+                        print("More")
+                    } label: {
+                        Image(systemName: "repeat")
+                            .font(.title)
+                            .foregroundColor(.black)
+                            .foregroundColor(.black)
+                    }
+                    
+                }.padding()
+                
+                Spacer()
+                    .frame(height: 90)
+                
+                
+            } // Background Color
+        }
+        .onAppear {
+         let sound = Bundle.main.path(forResource: "song1", ofType: "mp3")
+      
+         self.audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: sound!))
+            
+        }
+    }
+}
+
+
+struct PlayerView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlayerView(sounds : Sound(name: "song1"))
+    }
+}
